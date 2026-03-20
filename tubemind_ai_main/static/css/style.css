@@ -1,0 +1,559 @@
+/* ------------------------------------------------------
+   GLOBAL
+--------------------------------------------------------*/
+body {
+    margin: 0;
+    background: #f7f8fa;
+    font-family: "Inter", sans-serif;
+    color: #222;
+}
+
+/* Centering main content */
+.main {
+    padding: 40px;
+}
+
+/* Prevent chatbot from blocking input fields */
+#chat-btn,
+#chat-box {
+    z-index: 10;
+}
+
+.card,
+.input {
+    position: relative;
+    z-index: 1;
+}
+
+/* Smooth animations */
+* {
+    transition: all 0.25s ease;
+}
+
+/* ------------------------------------------------------
+   SIDEBAR (APPLE STYLE)
+--------------------------------------------------------*/
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: white;
+    position: fixed;
+    padding: 35px 25px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    letter-spacing: -1px;
+    color: #111;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 12px;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #444;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.nav-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+    transform: translateX(4px);
+}
+
+/* ------------------------------------------------------
+   CARD (GLASS STYLE)
+--------------------------------------------------------*/
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+}
+
+/* ------------------------------------------------------
+   INPUTS & BUTTONS (APPLE STYLE)
+--------------------------------------------------------*/
+.input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    margin: 10px 0;
+    font-size: 15px;
+    background: #fafafa;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    background: white;
+    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+}
+
+.btn {
+    background: #4C3AFF;
+    border: none;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #3a2aff;
+    transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------
+   QUIZ CARDS
+--------------------------------------------------------*/
+.quiz-card {
+    padding: 18px;
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 15px;
+    box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.06);
+    white-space: pre-wrap;
+}
+
+/* ------------------------------------------------------
+   CHATBOT – GLASS FLOATING BUTTON
+--------------------------------------------------------*/
+#chat-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 72px;
+    height: 72px;
+    background: #4C3AFF;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+#chat-btn:hover {
+    transform: scale(1.08);
+}
+
+/* ------------------------------------------------------
+   CHATBOX GLASS PANEL
+--------------------------------------------------------*/
+#chat-box {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    bottom: 115px;
+    right: 30px;
+    width: 360px;
+    height: 480px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 22px;
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.25);
+}
+
+.chat-header {
+    background: rgba(76, 58, 255, 0.9);
+    color: white;
+    padding: 16px;
+    font-weight: bold;
+    border-radius: 22px 22px 0 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.msg {
+    padding: 12px 16px;
+    border-radius: 18px;
+    margin-bottom: 12px;
+    font-size: 14.5px;
+    line-height: 1.4;
+}
+
+.msg.user {
+    background: #E8F9E9;
+    margin-left: auto;
+}
+
+.msg.bot {
+    background: #EFEAFF;
+}
+
+/* Input section */
+.chat-input-box {
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#chat-input {
+    flex-grow: 1;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+#chat-send {
+    background: #4C3AFF;
+    border: none;
+    padding: 0 18px;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------
+   HOME PAGE HERO SECTION
+--------------------------------------------------------*/
+.hero-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.hero-text {
+    width: 55%;
+}
+
+.hero-title {
+    font-size: 46px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.2;
+}
+
+.accent {
+    color: #4C3AFF;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #444;
+    max-width: 550px;
+}
+
+.hero-buttons {
+    margin-top: 28px;
+    display: flex;
+    gap: 16px;
+}
+
+.primary-btn {
+    padding: 14px 26px;
+    background: #4C3AFF;
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.primary-btn:hover {
+    background: #3a2aff;
+}
+
+.secondary-btn {
+    padding: 14px 26px;
+    background: white;
+    color: #4C3AFF;
+    border: 2px solid #4C3AFF;
+    border-radius: 12px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.secondary-btn:hover {
+    background: #f2f0ff;
+}
+
+/* Hero Image */
+.hero-graphic {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-img {
+    width: 85%;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* ------------------------------------------------------
+   FEATURES SECTION
+--------------------------------------------------------*/
+.section-title {
+    margin-top: 70px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #222;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 25px;
+}
+
+.feature-card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    transition: 0.25s;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+}
+
+.feature-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.feature-title {
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.feature-desc {
+    font-size: 15px;
+    color: #555;
+    margin-top: 6px;
+}
+
+/* ------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------*/
+@media (max-width: 900px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text,
+    .hero-graphic {
+        width: 100%;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Page Title */
+.page-title {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Card with glassmorphism */
+.transcript-card {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+    animation: fadeUp 0.6s ease;
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* Modern Input */
+.modern-input {
+    border: 2px solid #dcdcff;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    transition: 0.25s;
+}
+
+.modern-input:focus {
+    border-color: #4C3AFF;
+    box-shadow: 0 0 12px rgba(76,58,255,0.4);
+}
+
+/* Buttons */
+.fancy-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(76,58,255,0.3);
+    transition: 0.25s;
+}
+
+.fancy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(76,58,255,0.4);
+}
+
+/* Success + Error indicators */
+.status-text {
+    margin-top: 20px;
+    font-size: 17px;
+}
+
+.success-check {
+    color: #41c96f;
+    font-weight: 700;
+}
+
+.error-cross {
+    color: red;
+    font-weight: 700;
+}
+
+/* Loader spinner */
+.loader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.hidden { display: none; }
+
+.spinner {
+    width: 22px;
+    height: 22px;
+    border: 3px solid #ccc;
+    border-top-color: #4C3AFF;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+/* Buttons for next actions */
+.next-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 16px;
+}
+
+.next-actions .small {
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+/* Center the next action buttons */
+.center-buttons {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.transcript-card .modern-input,
+.transcript-card .fancy-btn {
+    width: 100%;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.result-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8f9ff;
+    border-radius: 12px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none;
+}
+
+.actions {
+    margin-top: 15px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #4C3AFF, #6E5BFF);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.secondary-btn {
+    background: #eee;
+    padding: 8px 12px;
+    border-radius: 8px;
+}

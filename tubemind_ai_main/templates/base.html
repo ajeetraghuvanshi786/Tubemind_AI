@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tubemind AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+
+<div class="main">
+    {% block content %}{% endblock %}
+</div>
+
+{% include "components/chatbot.html" %}
+<script src="/static/js/chat.js"></script>
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

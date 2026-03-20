@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Generate Quiz</h1>
+
+<div class="card">
+    <form method="POST">
+
+        <label>Language</label>
+        <select name="language" class="input">
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Spanish</option>
+            <option>French</option>
+            <option>German</option>
+            <option>Chinese (Traditional)</option>
+            <option>Arabic</option>
+            <option>Japanese</option>
+            <option>Korean</option>
+            <option>Portuguese</option>
+            <option>Russian</option>
+            <option>Italian</option>
+            <option>Telugu</option>
+            <option>Marathi</option>
+            <option>Gujarati</option>
+            <option>Kannada</option>
+        </select>
+
+
+        <label>Difficulty</label>
+        <select name="difficulty" class="input">
+            <option>EASY</option>
+            <option>MEDIUM</option>
+            <option>HARD</option>
+        </select>
+
+        <label>Number of Questions</label>
+        <input type="number" name="number" min="3" max="15" value="5" class="input">
+
+        <button class="btn w-100">Generate</button>
+    </form>
+</div>
+
+
+{% if questions %}
+<h2>Questions</h2>
+{% for q in questions %}
+<div class="quiz-card">{{ q }}</div>
+{% endfor %}
+{% endif %}
+
+{% if answers %}
+<h2>Answer Key</h2>
+{% for a in answers %}
+<div class="quiz-card answer">{{ a }}</div>
+{% endfor %}
+{% endif %}
+
+{% endblock %}

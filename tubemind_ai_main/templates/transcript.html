@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="page-title">Load Transcript</h1>
+
+<div class="transcript-card">
+
+    <input id="yt-url" class="input modern-input" placeholder="Paste any video URL">
+
+    <button id="load-btn" class="primary-btn fancy-btn">
+        Load Transcript
+    </button>
+
+    <div id="loading" class="loader hidden">
+        <div class="spinner"></div>
+        Extracting transcript…
+    </div>
+
+    <p id="status" class="status-text"></p>
+
+    <div id="next-actions" class="next-actions hidden center-buttons">
+        <a href="/ask" class="primary-btn small">Start Asking</a>
+        <a href="/quiz" class="secondary-btn small">Generate Quiz</a>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById("load-btn").onclick = async () => {
+        let url = document.getElementById("yt-url").value;
+        let loading = document.getElementById("loading");
+        let status = document.getElementById("status");
+        let actions = document.getElementById("next-actions");
+
+        status.innerText = "";
+        actions.classList.add("hidden");
+        loading.classList.remove("hidden");
+
+        let r = await fetch("/transcript", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "url=" + encodeURIComponent(url)
+        });
+
+        loading.classList.add("hidden");
+
+        let d = await r.json();
+
+        if (d.message) {
+            status.innerHTML = `<span class='success-check'>✔</span> ${d.message}`;
+            actions.classList.remove("hidden");
+        } else {
+            status.innerHTML = `<span class='error-cross'>✖</span> ${d.error}`;
+        }
+    };
+</script>
+
+{% endblock %}

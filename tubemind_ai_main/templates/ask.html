@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="page-title">Ask Questions</h1>
+
+<div class="card">
+
+    <label>Question</label>
+
+    <div class="input-row">
+        <input id="question-input" class="input" placeholder="Ask anything...">
+        <button onclick="askStreaming()" class="btn">Ask</button>
+        <button onclick="startAskMic()" class="btn">🎤</button>
+    </div>
+
+    <div id="answer-box" class="result-box hidden"></div>
+
+    <div class="actions">
+        <button onclick="generateNotes()" class="secondary-btn">📘 Generate Notes</button>
+    </div>
+
+    <div id="notes-box" class="result-box hidden"></div>
+
+</div>
+
+<!-- ========================== -->
+<!-- 🔥 COMPARE VIDEOS -->
+<!-- ========================== -->
+
+<div class="card">
+
+    <h2>Compare Videos</h2>
+
+    <input id="video1" class="input" placeholder="Video URL 1">
+    <input id="video2" class="input" placeholder="Video URL 2">
+
+    <input id="compare-question" class="input" placeholder="What to compare?">
+
+    <button onclick="compareVideos()" class="btn">Compare</button>
+
+    <div id="compare-result" class="result-box hidden"></div>
+
+</div>
+
+<script>
+
+    // ==========================
+    // 🔥 STREAMING ASK
+    // ==========================
+    async function askStreaming() {
+
+        const input = document.getElementById("question-input");
+        const box = document.getElementById("answer-box");
+
+        const question = input.value.trim();
+        if (!question) return;
+
+        box.classList.remove("hidden");
+        box.innerText = "Thinking...";
+
+        const res = await fetch("/ask-stream", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question })
+        });
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+
+        box.innerText = "";
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            box.innerText += decoder.decode(value);
+        }
+    }
+
+    // ==========================
+    // 📘 NOTES
+    // ==========================
+    async function generateNotes() {
+
+        const box = document.getElementById("notes-box");
+
+        box.classList.remove("hidden");
+        box.innerText = "Generating notes...";
+
+        const res = await fetch("/notes", { method: "POST" });
+        const data = await res.json();
+
+        if (data.error) {
+            box.innerText = data.error;
+            return;
+        }
+
+        box.innerText = data.notes;
+    }
+
+    // ==========================
+    // 🔥 COMPARE
+    // ==========================
+    async function compareVideos() {
+
+        const v1 = document.getElementById("video1").value;
+        const v2 = document.getElementById("video2").value;
+        const q = document.getElementById("compare-question").value;
+
+        const box = document.getElementById("compare-result");
+
+        if (!v1 || !v2 || !q) return;
+
+        box.classList.remove("hidden");
+        box.innerText = "Comparing...";
+
+        const res = await fetch("/compare", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                videos: [v1, v2],
+                question: q
+            })
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+            box.innerText = data.error;
+            return;
+        }
+
+        box.innerText = data.answer;
+    }
+
+</script>
+
+{% endblock %}
