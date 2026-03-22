@@ -121,7 +121,7 @@ Response (Text + Voice)
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/tubemind-ai.git
+git clone https://github.com/ajeetraghuvanshi786/tubemind-ai.git
 cd tubemind-ai
 ```
 
